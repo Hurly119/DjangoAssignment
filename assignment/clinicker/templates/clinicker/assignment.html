@@ -1,0 +1,61 @@
+{% extends "clinicker/base.html" %}
+
+{% block title %}
+Assignments
+{% endblock %}
+
+{% block body %}
+<h1>Assignments List</h1>
+<ul>
+{% for assignment in assignments %}
+<li>
+  <div class="col-12"><h3><a href="{% url 'checkAssignment' assignment.id %}">Assignment {{ assignment.id }}</a></h3>
+  </div>
+  <div class="col-12">
+    {{ assignment }}
+  </div>
+
+  <div class="col-12">
+  <h5>Doctors</h5>
+  </div>
+  {% if assignment.doctorsAssigned.all %}
+  <ol>
+    {% for doctors in assignment.doctorsAssigned.all %}
+    <li><div class="col-12">
+      {{ doctors }}
+    </div></li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="col-12">
+    No Doctors assigned
+  </div>
+  {% endif %}
+
+  <div class="col-12">
+    <h5>Staffs</h5>
+  </div>
+  {% if assignment.staffAssigned.all %}
+  <ol>
+    {% for staffs in assignment.staffAssigned.all %}
+    <li><div class="col-12">
+      {{ staffs }}
+    </div></li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="col-12">
+    No staffs assigned.
+  </div>
+  {% endif %}
+</li>
+{% empty %}
+
+<li><div class="col-12">
+<h3>No assignments</h3>
+</div></li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'index' %}">Back to Home</a>
+{% endblock %}

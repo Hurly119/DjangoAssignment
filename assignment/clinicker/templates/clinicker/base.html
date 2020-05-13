@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'clinicker/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'clinicker/bootstrap-grid.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'clinicker/bootstrap-reboot.css' %}">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    {% endblock %}
+  </body>
+</html>

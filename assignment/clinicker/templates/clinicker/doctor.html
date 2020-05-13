@@ -1,0 +1,58 @@
+{% extends "clinicker/base.html" %}
+
+{% block title %}
+Doctors
+{% endblock %}
+
+{% block body %}
+<h1>Doctor List</h1>
+<ul>
+{% for doctor in doctors %}
+<li>
+    <div class="col-12">
+      <h6>Doctor {{ doctor.id }}</h6>
+      <div class="row">
+        <div class="col-1">
+          Name:
+        </div>
+        <div class="col-4">
+          {{ doctor.last }}, {{ doctor.first }}
+        </div>
+
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-1">
+          Specialization:
+        </div>
+        <div class="col-4">
+          {{ doctor.specialized }}
+        </div>
+    </div>
+    <a href="{% url 'removeDoctor' doctor.id %}">Remove Doctor</a>
+</li>
+<!-- <li>{{ doctor.last }}, {{ doctor.first }}</li>
+<li>{{ doctor.specialized }}</li> -->
+{% empty %}
+<li><h3>No assignments</h3></li>
+{% endfor %}
+</ul>
+<form class="" action="{% url 'addDoctors' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="firstName" placeholder="First name">
+  <input type="text" name="lastName" placeholder="Last name">
+  <select name="specialization">
+  {% for specialized in specializations %}
+    <option value="{{ specialized.id }}">{{ specialized.specializationData}}</option>
+  {% endfor %}
+  </select>
+  <input type="submit" value="Add Doctor.">
+</form>
+  {% if messages %}
+    {% for msg in messages %}
+      {{ msg.message }}
+    {% endfor %}
+  {% endif %}
+<a href="{% url 'index' %}">Back to Home</a>
+{% endblock %}

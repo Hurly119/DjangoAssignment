@@ -1,0 +1,11 @@
+{% extends "clinicker/base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<a href="{% url 'doctors' %}">View Doctors</a><br>
+<a href="{% url 'staffs' %}">View Staffs</a><br>
+<a href="{% url 'assignments' %}">View Assignments</a><br>
+{% endblock %}

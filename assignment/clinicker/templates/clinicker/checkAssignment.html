@@ -1,0 +1,80 @@
+{% extends "clinicker/base.html" %}
+
+{% block title %}Assignment {{ assignment.id }}{% endblock %}
+
+
+{% block body %}
+<div class="row">
+  <div class="col-3">
+    {{ assignment.dateAssignment }}
+  </div>
+  <div class="col-3">
+    <h5>Doctors</h5>
+    <ul>
+      {% if assignment.doctorsAssigned.all %}
+        {% for doctors in assignment.doctorsAssigned.all %}
+            <li> {{ doctors }} <a href="{% url 'removeAssignedDoctor' assignment.id doctors.id %}">remove</a></li>
+        {% endfor %}
+      {% else %}
+      <li>No Doctors assigned</li>
+      {% endif %}
+    </ul>
+  </div>
+
+  <div class="col-3">
+    <h5>Staffs</h5>
+    <ul>
+      {% if assignment.staffAssigned.all %}
+        {% for staffs in assignment.staffAssigned.all %}
+            <li>{{ staffs }} <a href="{% url 'removeAssignedStaff' assignment.id staffs.id %}">remove</a></li>
+        {% endfor %}
+      {% else %}
+      <li>No staffs assigned.</li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4 offset-md-3">
+    <form class="" action="{% url 'assignAssignments' assignment.id %}" method="post">
+      {% csrf_token %}
+      <select name="doctorsAvailable">
+        <option value="-1">Choose a doctor to add</option>
+      {% for doctor in DoctorsAvailable %}
+          <option value="{{ doctor.id }}">{{ doctor }}</option>
+      {% empty %}
+          <option value="-1">No Doctors available</option>
+      {% endfor %}
+      </select>
+      <select name="staffsAvailable">
+        <option value="-1">Choose a staff to add</option>
+      {% for staff in StaffsAvailable %}
+        <option value="{{ staff.id }}">{{ staff }}</option>
+      {% empty %}
+          <option value="-1">No Staffs available</option>
+      {% endfor %}
+      </select>
+      <input type="submit" value="Add Personnel.">
+    </form>
+  </div>
+  </div>
+
+  <!-- <div class="col-4">
+    <form class="" action="{% url 'assignAssignments' assignment.id %}" method="post">
+      {% csrf_token %}
+      <select name="doctorsAvailable">
+        <option value="-1">Choose a doctor to add</option>
+      {% for doctor in DoctorsAvailable %}
+          <option value="{{ doctor.id }}">{{ doctor }}</option>
+      {% empty %}
+          <option value="-1">No Doctors available</option>
+      {% endfor %}
+      </select>
+      <input type="submit" value="Add Doctor.">
+    </form>
+  </div>
+</div> -->
+<br><br><br>
+<a href="{% url 'index' %}">Back to Home</a>
+{% endblock %}

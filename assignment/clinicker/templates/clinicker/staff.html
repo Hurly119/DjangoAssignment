@@ -1,0 +1,44 @@
+{% extends "clinicker/base.html" %}
+
+{% block title %}
+Staffs
+{% endblock %}
+
+{% block body %}
+<h1>Staffs List</h1>
+<ul>
+{% for staff in staffs %}
+<li>
+    <div class="col-12">
+      <h6>Staff {{ staff.id }}</h6>
+      <div class="row">
+        <div class="col-1">
+        Name:
+        </div>
+        <div class="col-4">
+        {{ staff.last }}, {{ staff.first }}
+        </div>
+
+      </div>
+    </div>
+
+    <a href="{% url 'removeStaff' staff.id %}">Remove Staff</a>
+</li>
+{% empty %}
+<li><h3>No staffs</h3></li>
+{% endfor %}
+</ul>
+<form class="" action="{% url 'addStaffs' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="firstName" placeholder="First name">
+  <input type="text" name="lastName" placeholder="Last name">
+
+  <input type="submit" value="Add Staff.">
+</form>
+  {% if messages %}
+    {% for msg in messages %}
+      {{ msg.message }}
+    {% endfor %}
+  {% endif %}
+<a href="{% url 'index' %}">Back to Home</a>
+{% endblock %}
